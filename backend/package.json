@@ -1,0 +1,28 @@
+{
+  "name": "daybook-api",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^9.0.0",
+    "multer": "^2.5.0",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^10.3.0",
+    "supertest": "^7.1.4"
+  }
+}

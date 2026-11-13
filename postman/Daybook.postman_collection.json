@@ -1,0 +1,149 @@
+{
+  "info": {
+    "_postman_id": "e0ed5db7-5216-4c61-bcf6-daybook-local-api",
+    "name": "Daybook local API - 5 checks",
+    "description": "Five Postman requests for the current Daybook Express API. Login or signup stores the daybook_session cookie used by protected requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3100/api"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Health check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('API is healthy', function () {", 
+              "  pm.response.to.have.status(200);", 
+              "  pm.expect(pm.response.json().status).to.eql('ok');", 
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Sign up a test account",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Postman Test\",\n  \"username\": \"postman_{{$timestamp}}\",\n  \"email\": \"postman_{{$timestamp}}@example.com\",\n  \"password\": \"PostmanTest_123!\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/signup"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Account created', function () {", 
+              "  pm.response.to.have.status(201);", 
+              "  pm.expect(pm.response.json()).to.have.property('user');", 
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Log in to an existing account",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"identifier\": \"replace-with-your-username-or-email\",\n  \"password\": \"replace-with-your-password\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/login"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Login succeeded', function () {", 
+              "  pm.response.to.have.status(200);", 
+              "  pm.expect(pm.response.json()).to.have.property('user');", 
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Get current user",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/auth/me"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Session cookie is accepted', function () {", 
+              "  pm.response.to.have.status(200);", 
+              "  pm.expect(pm.response.json()).to.have.property('user');", 
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Create a diary entry",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "title", "value": "My Postman entry", "type": "text" },
+            { "key": "content", "value": "Created through the Daybook API.", "type": "text" },
+            { "key": "date", "value": "2026-11-13", "type": "text" },
+            { "key": "mood", "value": "good", "type": "text" },
+            { "key": "tags", "value": "[\"postman\", \"test\"]", "type": "text" },
+            { "key": "favorite", "value": "false", "type": "text" }
+          ]
+        },
+        "url": "{{baseUrl}}/entries"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Entry created', function () {", 
+              "  pm.response.to.have.status(201);", 
+              "  pm.expect(pm.response.json()).to.have.property('entry');", 
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-const apiBaseUrl = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '');
-
+//const apiBaseUrl = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '');
+const apiBaseUrl = 'https://diary-mern.onrender.com';
 export async function api(path, options = {}) {
  const response = await fetch(apiBaseUrl + path, { credentials: 'include', ...options, headers: options.body instanceof FormData ? options.headers : { 'Content-Type': 'application/json', ...options.headers } });
  const data = await response.json().catch(() => ({ message: 'Could not reach the server.' }));

@@ -1,5 +1,7 @@
+const apiBaseUrl = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '');
+
 export async function api(path, options = {}) {
- const response = await fetch('/api' + path, { credentials: 'include', ...options, headers: options.body instanceof FormData ? options.headers : { 'Content-Type': 'application/json', ...options.headers } });
+ const response = await fetch(apiBaseUrl + path, { credentials: 'include', ...options, headers: options.body instanceof FormData ? options.headers : { 'Content-Type': 'application/json', ...options.headers } });
  const data = await response.json().catch(() => ({ message: 'Could not reach the server.' }));
  if (!response.ok) { const error = new Error(data.message || 'Request failed.'); error.status = response.status; throw error; }
  return data;

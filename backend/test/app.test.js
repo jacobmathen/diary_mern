@@ -6,9 +6,9 @@ import request from 'supertest';
 import sharp from 'sharp';
 import {createApp} from '../app.js';
 import User from '../models/userModel.js';
-let mongo,app;
-before(async()=>{process.env.JWT_SECRET='test-secret-with-more-than-thirty-two-characters';mongo=await MongoMemoryServer.create({binary:{downloadDir:process.env.MONGOMS_DOWNLOAD_DIR||'../.mongodb-binaries'}});await mongoose.connect(mongo.getUri());await User.init();app=createApp();});
-after(async()=>{await mongoose.disconnect();await mongo?.stop();});
+let mongo,app,previousClientOrigin,previousClientOrigins,previousNodeEnv;
+before(async()=>{previousClientOrigin=process.env.CLIENT_ORIGIN;previousClientOrigins=process.env.CLIENT_ORIGINS;previousNodeEnv=process.env.NODE_ENV;process.env.CLIENT_ORIGIN='http://localhost:5173';delete process.env.CLIENT_ORIGINS;process.env.NODE_ENV='test';process.env.JWT_SECRET='test-secret-with-more-than-thirty-two-characters';mongo=await MongoMemoryServer.create({binary:{downloadDir:process.env.MONGOMS_DOWNLOAD_DIR||'../.mongodb-binaries'}});await mongoose.connect(mongo.getUri());await User.init();app=createApp();});
+after(async()=>{await mongoose.disconnect();await mongo?.stop();if(previousClientOrigin===undefined)delete process.env.CLIENT_ORIGIN;else process.env.CLIENT_ORIGIN=previousClientOrigin;if(previousClientOrigins===undefined)delete process.env.CLIENT_ORIGINS;else process.env.CLIENT_ORIGINS=previousClientOrigins;if(previousNodeEnv===undefined)delete process.env.NODE_ENV;else process.env.NODE_ENV=previousNodeEnv;});
 const signup=(agent,name)=>agent.post('/api/auth/signup').send({name,username:name,email:name+'@example.com',password:'a-long-safe-password'});
 test('authenticated journal lifecycle, private images and owner isolation',async()=>{
  const alice=request.agent(app),bob=request.agent(app);

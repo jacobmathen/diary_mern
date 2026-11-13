@@ -5,7 +5,10 @@ import rateLimit from 'express-rate-limit';
 import User from '../models/userModel.js';
 import {requireAuth} from '../middleware/auth.js';
 const router=Router();
-const options=()=>({httpOnly:true,secure:process.env.NODE_ENV==='production',sameSite:'lax',path:'/'});
+const options=()=>{
+const production=process.env.NODE_ENV==='production';
+return {httpOnly:true,secure:production,sameSite:production?'none':'lax',path:'/'};
+};
 const publicUser=u=>({id:u.id,name:u.name,username:u.username,email:u.email});
 function session(res,user){
 const token=jwt.sign({},process.env.JWT_SECRET,{subject:user.id,expiresIn:'7d',algorithm:'HS256'});

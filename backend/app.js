@@ -28,12 +28,18 @@ export function createApp() {
 
   // Allow local development aliases outside production.
   if (process.env.NODE_ENV !== 'production') {
-    for (const hostname of ['localhost', '127.0.0.1']) {
+    for (const hostname of ['localhost', '127.0.0.1', '[::1]']) {
       allowedOrigins.add(`http://${hostname}:5173`);
     }
   }
 
   app.disable('x-powered-by');
+
+  // Render forwards the client IP through one trusted proxy hop. This must be
+  // enabled before rate limiting so proxied requests are accepted correctly.
+  if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+  }
 
   app.use(helmet());
 

@@ -13,7 +13,7 @@ export function createApp() {
 
   // Hardcoded allowed frontend domains
   const allowedOrigins = [
-    'https://YOUR-VERCEL-DOMAIN.vercel.app',
+    'https://diary-mern.vercel.app',
     'http://localhost:5173',
     'http://127.0.0.1:5173'
   ];
@@ -23,10 +23,7 @@ export function createApp() {
   // Render proxy configuration
   app.set('trust proxy', 1);
 
-  // Security headers
-  app.use(helmet());
-
-  // CORS configuration
+  // CORS configuration (must run before routes)
   app.use(cors({
     origin: (origin, callback) => {
       // Allow requests without Origin
@@ -40,7 +37,7 @@ export function createApp() {
 
       console.error('Blocked CORS origin:', origin);
 
-      return callback(new Error('Origin not allowed by CORS'));
+      return callback(null, false);
     },
 
     credentials: true,
@@ -61,6 +58,9 @@ export function createApp() {
 
     optionsSuccessStatus: 204
   }));
+
+  // Security headers
+  app.use(helmet());
 
   // Disable API caching
   app.use('/api', (req, res, next) => {
@@ -104,16 +104,13 @@ export function createApp() {
 
   // Error handler
   app.use((error, req, res, next) => {
+    console.error(error);
+
     const status =
       error.code === 11000 ? 409 :
       error.code === 'LIMIT_FILE_SIZE' ? 413 :
       ['ValidationError', 'CastError', 'MulterError'].includes(error.name) ? 400 :
-      error.message === 'Origin not allowed by CORS' ? 403 :
       error.status || 500;
-
-    if (status === 500) {
-      console.error(error);
-    }
 
     res.status(status).json({
       message:

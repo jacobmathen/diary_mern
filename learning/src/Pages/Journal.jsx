@@ -33,7 +33,8 @@ export default function Journal(){
  const {theme,toggleTheme,notify}=useUI();
  const [view,setView]=useState('all'),[query,setQuery]=useState(''),[mood,setMood]=useState(''),[date,setDate]=useState(''),[tag,setTag]=useState('');
  const [sort,setSort]=useState('newest'),[selectedId,setSelectedId]=useState(''),[creating,setCreating]=useState(false),[filtersOpen,setFiltersOpen]=useState(false),[toolsOpen,setToolsOpen]=useState(true);
- const [accountOpen,setAccountOpen]=useState(false),[deleteTarget,setDeleteTarget]=useState(null),[photo,setPhoto]=useState(''),[signingOut,setSigningOut]=useState(false);\n const [editorTheme,setEditorTheme]=useState('paper'),[editorFont,setEditorFont]=useState('serif'),[editorFontSize,setEditorFontSize]=useState(14),[editorLineHeight,setEditorLineHeight]=useState(1.9);
+ const [accountOpen,setAccountOpen]=useState(false),[deleteTarget,setDeleteTarget]=useState(null),[photo,setPhoto]=useState(''),[signingOut,setSigningOut]=useState(false);
+ const [editorTheme,setEditorTheme]=useState('paper'),[editorFont,setEditorFont]=useState('serif'),[editorFontSize,setEditorFontSize]=useState(14),[editorLineHeight,setEditorLineHeight]=useState(1.9);
  const readerRef=useRef(null),activeKeyRef=useRef(null);
  const {drafts,getDraft,updateDraft,startTemplate,addPhotos,removeUpload,discardDraft,clearDrafts,saveDraft,savingKey,errors,hasUnsaved}=useJournalDrafts(user.id);
  useEffect(()=>{dispatch(loadEntries());},[dispatch]);

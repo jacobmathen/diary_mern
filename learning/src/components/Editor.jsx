@@ -1,3 +1,4 @@
+import '../styles/inline-editor.css';
 import {useLayoutEffect,useRef} from 'react';
 import {Save,RotateCcw,Star,Trash2,Copy,ImagePlus,X,ChevronDown,ArrowUpRight} from 'lucide-react';
 import {Button} from '@/components/ui/button';

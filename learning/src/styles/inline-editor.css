@@ -77,3 +77,33 @@
 .wb-inline-title{overflow:hidden}
 .wb-inline-savebar{top:12px;bottom:auto;margin:16px 15px 0}
 @media(max-width:480px){.wb-inline-savebar{top:10px;bottom:auto;margin:11px 10px 0}}
+
+/* Scribe-inspired journal paper and typography controls */
+.wb-editor-theme-paper{background:var(--card)}
+.wb-editor-theme-blue{background:#f2f7ff;border-color:#dce8fa}
+.wb-editor-theme-mint{background:#f0faf2;border-color:#d9efdf}
+.wb-editor-theme-sunshine{background:#fff9e2;border-color:#f0e8c4}
+.wb-editor-theme-rose{background:#fff2f3;border-color:#f1dfe3}
+.wb-inline-title.wb-editor-font-serif,.wb-inline-writing.wb-editor-font-serif{font-family:Georgia,'Times New Roman',serif}
+.wb-inline-title.wb-editor-font-sans,.wb-inline-writing.wb-editor-font-sans{font-family:var(--font-sans),sans-serif}
+.wb-inline-title.wb-editor-font-mono,.wb-inline-writing.wb-editor-font-mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.wb-inline-title{border-bottom-color:transparent}
+.wb-inline-writing{padding:12px 4px 8px}
+.scribe-tools-card{background:var(--card);border:1px solid color-mix(in srgb,var(--border) 65%,transparent);border-radius:20px;padding:18px 16px;margin-bottom:14px;box-shadow:0 5px 20px #6b521405}
+.scribe-tools-card>.wb-overline{display:block;margin-bottom:13px}
+.scribe-theme-swatches{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
+.scribe-swatch{height:43px;position:relative;border:1px solid transparent;border-radius:11px;display:grid;place-items:center;font:700 13px Georgia,serif;color:#464646}
+.scribe-swatch svg{position:absolute;right:-4px;top:-5px;width:16px;height:16px;padding:2px;border-radius:50%;background:#333;color:white}
+.scribe-paper{background:#fff;border-color:#e8e8e8}.scribe-blue{background:#e8f1ff;color:#537eae}.scribe-mint{background:#e3f8e9;color:#4f9465}.scribe-sunshine{background:#fff2c9;color:#9d8738}.scribe-rose{background:linear-gradient(135deg,#dceaff,#f6dce5 60%,#fff0d4);color:#74698c}
+.scribe-swatch.is-selected{box-shadow:0 0 0 2px color-mix(in srgb,var(--primary) 35%,transparent)}
+.scribe-divider{border-top:1px dashed var(--border);margin:18px 0}
+.scribe-setting{display:grid;gap:7px;padding:11px 12px;border:1px solid var(--border);border-radius:12px;background:var(--background);margin-bottom:12px}
+.scribe-setting>span,.scribe-range>span{font-size:10px;font-weight:600;color:var(--muted-foreground)}
+.scribe-setting select{height:29px;width:100%;border:0;border-top:1px solid var(--border);padding-top:6px;background:transparent;color:var(--foreground);font-size:11px;outline:0}
+.scribe-range{display:grid;gap:9px;margin:15px 2px}
+.scribe-range>span{display:flex;justify-content:space-between}
+.scribe-range b{font-weight:500}
+.scribe-range input{width:100%;accent-color:var(--primary)}
+.scribe-preview{height:62px;border:1px solid var(--border);border-radius:12px;background:var(--background);padding:8px 12px;display:flex;flex-direction:column;justify-content:center;font:25px Georgia,serif;color:var(--foreground)}
+.scribe-preview small{font:9px var(--font-sans);color:var(--muted-foreground)}
+@media(max-width:740px){.scribe-tools-card{padding:15px}.scribe-theme-swatches{gap:5px}.scribe-swatch{height:38px}}
